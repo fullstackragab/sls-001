@@ -1,7 +1,11 @@
 import { Config, Context } from '@netlify/functions';
+import { bootstrap } from 'src/bootstrap';
+
+let server;
 
 export default async (req: Request, context: Context) => {
-  return new Response('Hello, world! - Netlify Functions');
+  server = server ?? (await bootstrap());
+  return server(req, context);
 };
 
 export const config: Config = {
